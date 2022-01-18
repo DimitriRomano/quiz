@@ -21,4 +21,8 @@ class Quiz extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function publish(){
+        $this->isPublish = false;
+    }
+
 }
