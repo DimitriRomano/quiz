@@ -79,11 +79,11 @@ class QuizController extends Controller
 
     public function quizAdmin(Request $request)
     {
-        $quizRequest = $request->json_decode($request->getContent());
+        $quizRequest = $request;
         if(!$quizRequest->label && !$quizRequest->published && !$quizRequest){
             return Response('Missing paramerters',400);
         }
-        if($quizRequest->questions->length === 0){
+        if(sizeof($quizRequest->questions) === 0){
             return Response('Quiz must have at least one question',400);
         }
         
@@ -94,16 +94,16 @@ class QuizController extends Controller
 
         foreach ($quizRequest->questions as $question) {
             $q = new Question();
-            $q->label = $question->label;
-            $q->answer = $question->answer;
-            $q->earnings = $question->earning;
+            $q->label = $question['label'];
+            $q->answer = $question['answer'];
+            $q->earnings = $question['earnings'];
             $q->quiz_id = $quiz->id;
             $q->save();
 
-            foreach ($question->choices as $choice){
+            foreach ($question['choices'] as $choice){
                 $c = new Choice();
                 $c->question_id = $q->id;
-                $c->label = $choice->label;
+                $c->label = $choice['label'];
                 if($q->answer == $c->id){
                     $q->answer = $c->id;
                     $q->save();

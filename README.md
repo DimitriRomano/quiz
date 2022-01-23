@@ -7,31 +7,39 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## TP - Quizz
 
+> Membres : Romain MOLINA & Dimitri ROMANO
 
+# 1. Installation back
 
-## Learning Laravel
+- composer : `composer install`
 
+# 2. Installation Front
 
+- Installation packages : `npm install`
+- Lancement du front : `npm run dev`
 
-## Laravel Sponsors
+[![Image](https://i.goopics.net/r91as8.png)](https://goopics.net/i/r91as8)
 
+- Remplacer BASE_URL par votre URL d'API
 
+# 3. Database
 
-### Premium Partners
+- `php artisan migrate:fresh`
 
-## Contributing
+# 4. Middleware
 
+## IsAdmin
 
+Ce middleware permet de vérifier qu'un utilisateur est administrateur, cela permet par exemple de publier ou non des quizz ainsi que de les modifiers et les créer.
 
-## Code of Conduct
+## IsLoggedIn
 
+Ce middleware permet de vérifier qu'un utilisateur est connecté ce qui lui permet de répondre à un quiz par exemple
 
+# 5. Code of Conduct
 
 ## Security Vulnerabilities
 
-
-
 ## License
-
