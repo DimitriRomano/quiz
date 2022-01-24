@@ -43,12 +43,12 @@ Route::get('quiz/{id}', [QuizController::class, 'quizId']);
 Route::delete('quiz/{id}', [QuizController::class, 'quizDelete']);
 
 //publié
-Route::post('quiz/{id}/publish', [QuizController::class, 'quizPublish'])->middleware('isAdmin');
+Route::post('quiz/{id}/publish', [QuizController::class, 'quizPublish'])->middleware('IsAdmin');
 //ne ps publié
-Route::post('quiz/{id}/unpublish', [QuizController::class, 'quizUnpublish'])->middleware('isAdmin');
+Route::post('quiz/{id}/unpublish', [QuizController::class, 'quizUnpublish'])->middleware('IsAdmin');
 //create quiz
-Route::post('quiz', [QuizController::class, 'quizAdmin'])->middleware('isAdmin');
-Route::put('/quiz/{id}', [QuizController::class, 'editQuiz'])->middleware('isAdmin');
+Route::post('quiz', [QuizController::class, 'quizAdmin'])->middleware('IsAdmin');
+Route::put('/quiz/{id}', [QuizController::class, 'editQuiz'])->middleware('IsAdmin');
 //get questiosn from a quiz
 Route::get('quiz/{id}/questions', [QuizController::class, 'getQuizQuestions']);
 //get question choices
@@ -57,10 +57,10 @@ Route::get('question/{id}/choices', [QuestionController::class, 'getQuestionChoi
 Route::get('score', [ScoreController::class, 'getScores']);
 
 //get one specific score
-Route::get('score/{id}', [ScoreController::class, 'getScoreById'])->middleware('isLoggedIn');
+Route::get('score/{id}', [ScoreController::class, 'getScoreById'])->middleware('IsLoggedIn');
 
 //result when question is submit
-Route::post('score', [ScoreController::class, 'scoreResult'])->middleware('isLoggedIn');
+Route::post('score', [ScoreController::class, 'scoreResult'])->middleware('IsLoggedIn');
 
 Route::get('user/{userId}', [UserController::class, 'getUserInfo']);
 

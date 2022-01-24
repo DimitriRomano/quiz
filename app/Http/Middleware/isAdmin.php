@@ -4,8 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
-class isAdmin
+class IsAdmin
 {
     /**
      * Handle an incoming request.
@@ -16,6 +17,11 @@ class isAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        return $next($request);
+        $idUser = auth()->user()->id;
+        if($idUser && $idUser == 1){
+            return $next($request);
+        }else{
+            return Response('Unauthorized',401);
+        }
     }
 }
