@@ -22,7 +22,7 @@ class QuizController extends Controller
     }
 
 
-    public function quizId(Request $request, $id){
+    public function quizId($id){
         $quiz = Quiz::find($id);
         if($quiz) {
             return $quiz;
@@ -44,7 +44,7 @@ class QuizController extends Controller
             return Response('Quiz not found',404);
         }
         $foundQuiz->delete();
-        return Response('Quiz succesfully deleted');
+        return Response('Quiz succesfully deleted',200);
     }
 
     
@@ -61,7 +61,7 @@ class QuizController extends Controller
         if(!$foundQuiz){
             return Response('Quiz not found',404);
         }
-        $foundQuiz->isPublished = true;
+        $foundQuiz->published = true;
         $foundQuiz->save();
         return Response($foundQuiz);
     }
@@ -72,7 +72,7 @@ class QuizController extends Controller
         if(!$foundQuiz){
             return Response('Quiz not found',404);
         }
-        $foundQuiz->isPublished = false;
+        $foundQuiz->published = false;
         $foundQuiz->save();
         return Response($foundQuiz);
     }
@@ -81,7 +81,7 @@ class QuizController extends Controller
     {
         $quizRequest = $request;
         if(!$quizRequest->label && !$quizRequest->published && !$quizRequest){
-            return Response('Missing paramerters',400);
+            return Response('Missing parameters',400);
         }
         if(sizeof($quizRequest->questions) === 0){
             return Response('Quiz must have at least one question',400);
@@ -94,8 +94,9 @@ class QuizController extends Controller
 
         foreach ($quizRequest->questions as $question) {
             $q = new Question();
+            $answer = $question['answer'];
             $q->label = $question['label'];
-            $q->answer = $question['answer'];
+            $q->answer = null;
             $q->earnings = $question['earnings'];
             $q->quiz_id = $quiz->id;
             $q->save();
@@ -104,27 +105,53 @@ class QuizController extends Controller
                 $c = new Choice();
                 $c->question_id = $q->id;
                 $c->label = $choice['label'];
-                if($q->answer == $c->id){
+                $c->save();
+                if($choice['id'] == $answer){
                     $q->answer = $c->id;
                     $q->save();
                 }
-                $c->save();
             }
+            $q->save();
         }
 
         return Response('Quiz successfully created',200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+    public function getQuizQuestions($id){
+        $quiz = Quiz::find($id);
+        if($quiz !=null){
+            return Response($quiz->question,200);
+        }
     }
+
+    public function editQuiz(Request $request,$id){
+        $quiz = Quiz::find($id);
+
+        if($quiz == null){
+            return Response("Quiz doesn't exist",404);
+        }
+
+        $label = $request['label'];
+        $questions = $request['questions'];
+
+        if($label == null || $questions == null){
+            return Response("Parameter missing ",400);
+        }
+
+        if(sizeof($questions) === 0){
+            return Response('Quiz must have at least one question',400);
+        }
+
+        if(sizeof($questions[0]['choices']) === 0){
+            return Response('Quiz must have at least one choice',400);
+        }
+
+        
+
+
+
+        
+    }
+
 
 }

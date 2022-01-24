@@ -36,21 +36,32 @@ Route::group([
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);        
 });
-
+//all quiz
 Route::get('quiz', [QuizController::class, 'quiz']);
+//one quiz
 Route::get('quiz/{id}', [QuizController::class, 'quizId']);
 Route::delete('quiz/{id}', [QuizController::class, 'quizDelete']);
 
+//publié
 Route::post('quiz/{id}/publish', [QuizController::class, 'quizPublish'])->middleware('isAdmin');
+//ne ps publié
 Route::post('quiz/{id}/unpublish', [QuizController::class, 'quizUnpublish'])->middleware('isAdmin');
+//create quiz
 Route::post('quiz', [QuizController::class, 'quizAdmin'])->middleware('isAdmin');
 Route::put('/quiz/{id}', [QuizController::class, 'editQuiz'])->middleware('isAdmin');
+//get questiosn from a quiz
 Route::get('quiz/{id}/questions', [QuizController::class, 'getQuizQuestions']);
+//get question choices
 Route::get('question/{id}/choices', [QuestionController::class, 'getQuestionChoices']);
+//return all scores
 Route::get('score', [ScoreController::class, 'getScores']);
 
+//get one specific score
 Route::get('score/{id}', [ScoreController::class, 'getScoreById'])->middleware('isLoggedIn');
+
+//result when question is submit
 Route::post('score', [ScoreController::class, 'scoreResult'])->middleware('isLoggedIn');
+
 Route::get('user/{userId}', [UserController::class, 'getUserInfo']);
 
 Route::any('{any}', function(){

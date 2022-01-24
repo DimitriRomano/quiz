@@ -3,10 +3,22 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
+
+    public function getUserInfo($id){
+        $user = User::find($id);
+        if(!$user){
+            return Response('User not found',404);
+        }else{
+            return Response($user,200);
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *
