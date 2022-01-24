@@ -23,13 +23,17 @@
 # 3. Installation Front
 
 - Installation packages : `npm install`
-- Lancement du front : `npm run dev`
 
 [![Image](https://i.goopics.net/r91as8.png)](https://goopics.net/i/r91as8)
 
 - Remplacer BASE_URL par votre URL d'API
 
-# 4. Middleware
+# 4. Lancement de l'application
+
+- Lancement du back : ``php artisan serve`
+- Lancement du front : `npm run dev`
+
+# 5. Middleware
 
 ## IsAdmin
 
@@ -39,7 +43,7 @@ Ce middleware permet de vérifier qu'un utilisateur est administrateur, cela per
 
 Ce middleware permet de vérifier qu'un utilisateur est connecté ce qui lui permet de répondre à un quiz par exemple
 
-# 5. Routes
+# 6. Routes
 
 ## AuthController
 
